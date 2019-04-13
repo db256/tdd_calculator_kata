@@ -19,7 +19,7 @@ namespace Calc.SimpleCalc.Tests
 		[TestCase(" ")]
 		public void Empty_expression_returns_0(string input)
 		{
-			ThenCalculateResultShouldBe(input, "0");
+			calculator.Calculate(input).Should().Be("0");
 		}
 
 		[TestCase("0")]
@@ -27,26 +27,22 @@ namespace Calc.SimpleCalc.Tests
 		[TestCase("25")]
 		public void Simple_numbers_returns_numbers(string input)
 		{
-			ThenCalculateResultShouldBe(input, input);
+			calculator.Calculate(input).Should().Be(input);
 		}
 
 		[TestCase("111+22", "133")]
 		[TestCase("1+0+9+10", "20")]
 		[TestCase("1+0+9+10-20", "0")]
 		[TestCase("1+0+9+10-30", "-10")]
+		[TestCase("1+2*10", "21")]
 		public void Simple_expressions_returns_math_expression_result(string input, string expected)
 		{
-			ThenCalculateResultShouldBe(input, expected);
+			calculator.Calculate(input).Should().Be(expected);
 		}
 
 		[TestCase("adksfjkasdjf", "Error")]
 		[TestCase("-5555", "Error")]
 		public void Incorrect_expressions_returns_error_message(string input, string expected)
-		{
-			ThenCalculateResultShouldBe(input, expected);
-		}
-
-		private void ThenCalculateResultShouldBe(string input, string expected)
 		{
 			calculator.Calculate(input).Should().Be(expected);
 		}
