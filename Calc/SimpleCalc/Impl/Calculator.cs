@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,9 +11,21 @@ namespace Calc.SimpleCalc.Impl
 
 		public string Calculate(string expression)
 		{
-			if (string.IsNullOrEmpty(expression))
+			if (string.IsNullOrWhiteSpace(expression))
 				return InitialResult.ToString();
 
+			try
+			{
+				return CalculateInternal(expression);
+			}
+			catch (Exception)
+			{
+				return "Error";
+			}
+		}
+
+		private string CalculateInternal(string expression)
+		{
 			var findOperators = new Regex(@"[\+\-]{1}");
 			string[] numbers = findOperators.Split(expression);
 			string[] operators = findOperators.Matches(expression).Cast<Match>().Select(m => m.Value).ToArray();

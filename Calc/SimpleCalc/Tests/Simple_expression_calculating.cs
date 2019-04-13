@@ -39,6 +39,13 @@ namespace Calc.SimpleCalc.Tests
 			ThenCalculateResultShouldBe(input, expected);
 		}
 
+		[TestCase("adksfjkasdjf", "Error")]
+		[TestCase("-5555", "Error")]
+		public void Incorrect_expressions_returns_error_message(string input, string expected)
+		{
+			ThenCalculateResultShouldBe(input, expected);
+		}
+
 		private void ThenCalculateResultShouldBe(string input, string expected)
 		{
 			calculator.Calculate(input).Should().Be(expected);
